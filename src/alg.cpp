@@ -15,6 +15,8 @@ int countPairs2(int *arr, int len, int value) {
   int number = 0, L = 0, R = len - 1, middle;
   while (L < R) {
     middle = (L + R) / 2;
+    if (value == arr[middle])
+      break;
     if (arr[middle] < value)
       L = middle;
     else
