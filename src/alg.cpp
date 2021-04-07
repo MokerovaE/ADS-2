@@ -1,58 +1,56 @@
 // Copyright 2021 NNTU-CS
 
 int countPairs1(int *arr, int len, int value) {
-  int number = 0;
-  for (int i = 0; i < len - 1; i++) {
-    for (int j = i + 1; j < len; j++) {
+  int count = 0;
+  for (int i = 0; i < len - 1; i++)
+    for (int j = i + 1; j < len; j++)
       if (arr[i] + arr[j] == value)
-        number++;
-    }
-  }
-  return number;
+        count++;
+  return count;
 }
 
 int countPairs2(int *arr, int len, int value) {
-  int L = 0, R = len - 1, middle, number = 0;
-  while (L < R) {
-    middle = (L + R) / 2;
-    if (arr[middle] <= value)
-      L = middle;
+  int count = 0, x = 0, y = len - 1;
+  while (x < y) {
+    int mid = (x + y) / 2;
+    if (value == arr[mid])
+      break;
+    else if (value > arr[mid])
+      x = mid;
     else
-      R = middle;
+      y = mid;
   }
-  for (int i = R; i >= 0; i--) {
-    for (int j = 0; j < i; j++) {
-      if ((arr[i] + arr[j]) == value)
-        number++;
-      if ((arr[i] + arr[j]) > value)
+  for (int i = y; i >= 0; i--)
+    for (int j = 0; j < i; j++)
+      if (arr[i] + arr[j] == value)
+        count++;
+      else if (arr[i] + arr[j] > value)
         break;
-    }
-  }
-  return number;
+  return count;
 }
 
 int countPairs3(int *arr, int len, int value) {
-  int L = 0, R = len - 1, middle, mid, number = 0;
-  while (L < R - 1) {
-    middle = (L + R) / 2;
+  int count = 0, left = 0, right = len - 1;
+  while (left < right-1) {
+    int middle = (left + right) / 2;
     if (arr[middle] <= value)
-      L = middle;
+      left = middle;
     else
-      R = middle;
+      right = middle;
   }
-  for (int i = 0; i < L; i++) {
-    int left = i + 1, right = L;
-    while (left < right) {
-      mid = (left + right) / 2;
-      if (arr[mid] < (value - arr[i]))
-        left = mid + 1;
+  for (int i = 0; i < left; i++) {
+  int x = i + 1, y = left;
+    while (x < y) {
+      int mid = (x + y) / 2;
+      if (arr[mid] < value - arr[i])
+        x = mid + 1;
       else
-        right = mid;
+        y = mid;
     }
-    while (arr[left] == (value - arr[i])) {
-      number++;
-      left++;
+    while (arr[x] == value - arr[i]) {
+      count++;
+      x++;
     }
   }
-  return number;
+  return count;
 }
